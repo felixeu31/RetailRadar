@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Playwright;
-
 using RetailRadar.App.Common;
 using RetailRadar.App.Interfaces.Notifications;
 using RetailRadar.App.Models;
@@ -21,11 +19,11 @@ namespace RetailRadar.App.Services
             this._notificationService = notificationService;
         }
 
-        public async Task<Result> ExcutePriceDropAlertProcess(string productUrl)
+        public async Task<Result> ExcutePriceDropAlertProcess(PriceDropAlertProcessRequest request)
         {
             try
             {
-                var productInfoResult = await _deporvillageProductPage.GetProductInfo(productUrl);
+                var productInfoResult = await _deporvillageProductPage.GetProductInfo(request.ProductUrl);
 
                 if (productInfoResult == null || !productInfoResult.IsSuccess)
                 {
@@ -36,7 +34,7 @@ namespace RetailRadar.App.Services
 
                 _logger.LogInformation("Product Info retrieved from web page: {@ProductInfo}", productInfo);
 
-                if (productInfo!.Price.Amount < 200)
+                if (productInfo!.Price.Amount < request.PriceThreshold)
                 {
                     var notifyTo = new PersonDto("Félix Díez", "felixeu31@gmail.com");
                     var notificationResult = await _notificationService.NotifyProductPriceDrop(productInfo, notifyTo);
@@ -48,6 +46,10 @@ namespace RetailRadar.App.Services
 
                     _logger.LogInformation("Price drop notified to: {@Person}", notifyTo); 
                 }
+                else
+                {
+                    _logger.LogInformation("Price is not below {@PriceThreshold}, no notification sent", request.PriceThreshold);
+                }
 
                 return Result.Success();
             }
@@ -57,4 +59,6 @@ namespace RetailRadar.App.Services
             }
         }
     }
+
+    public record PriceDropAlertProcessRequest(string ProductUrl, decimal PriceThreshold);
 }

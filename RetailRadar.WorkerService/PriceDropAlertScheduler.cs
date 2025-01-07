@@ -38,6 +38,8 @@ namespace RetailRadar.WorkerService
 
             var initialDelay = scheduledTime - now;
             _timer = new Timer(async state => await DoWork(stoppingToken), null, initialDelay, TimeSpan.FromDays(1));
+
+            _logger.LogInformation("Scheduled daily for {@ScheduledTime}, starting in {@InitialDelay}", scheduledTime.ToString("g"), initialDelay);
         }
 
         private void ScheduleMinutlyTask(CancellationToken stoppingToken)
@@ -53,11 +55,10 @@ namespace RetailRadar.WorkerService
                 return;
             }
 
-            _logger.LogInformation("Worker '{0}' running at: {1}", nameof(PriceDropAlertScheduler), DateTimeOffset.Now);
+            _logger.LogInformation("Doing work at: {0}", DateTimeOffset.Now);
+            var result = await _retailRadarService.ExcutePriceDropAlertProcess(new PriceDropAlertProcessRequest("https://www.deporvillage.com/zapatillas-vivobarefoot-primus-lite-knit-azul-marino", 200M));
 
-            var result = await _retailRadarService.ExcutePriceDropAlertProcess("https://www.deporvillage.com/zapatillas-vivobarefoot-primus-lite-knit-azul-marino");
-
-            _logger.LogInformation("Worker '{0}' finished {1}", nameof(PriceDropAlertScheduler), result.IsSuccess ? "succesfully" : "with errors");
+            _logger.LogInformation("Work done {0}", result.IsSuccess ? "succesfully" : "with errors");
         }
 
         public override void Dispose()

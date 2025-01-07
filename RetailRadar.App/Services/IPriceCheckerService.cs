@@ -4,6 +4,6 @@ namespace RetailRadar.App.Services
 {
     public interface IPriceCheckerService
     {
-        Task<Result> ExcutePriceDropAlertProcess(string productUrl);
+        Task<Result> ExcutePriceDropAlertProcess(PriceDropAlertProcessRequest request);
     }
 }

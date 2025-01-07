@@ -12,7 +12,7 @@ namespace RetailRadar.WorkerService
         {
             // Configure Serilog
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File(@"C:\Logs\RetailRadar\log-.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.File(@"C:\Logs\RetailRadar\log-.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] [{SourceContext}] {Message:lj} {Properties:j} {NewLine}{Exception}")
                 .CreateLogger();
 
             try

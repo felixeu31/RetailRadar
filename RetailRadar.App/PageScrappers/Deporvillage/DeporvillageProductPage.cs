@@ -40,13 +40,14 @@ public class DeporvillageProductPage : IDeporvillageProductPage
                 return Result<ProductInfoDto?>.Failure("Price not found");
             }
 
-            var priceText = (await priceElement.InnerTextAsync()).Trim().Replace("€", "");
-            if (!decimal.TryParse(priceText, out var priceAmount))
+            var priceText = await priceElement.InnerTextAsync();
+            var priceResult = Price.ConvertFromText(priceText);
+            if (!priceResult.IsSuccess)
             {
-                return Result<ProductInfoDto?>.Failure("Invalid price format");
+                return Result<ProductInfoDto?>.Failure(priceResult.ErrorMessage);
             }
 
-            var price = new Price { Amount = priceAmount };
+            var price = priceResult.Value;
 
             // Extract title
             var titleElement = await page.QuerySelectorAsync("h1[class^='Product_product-title']");

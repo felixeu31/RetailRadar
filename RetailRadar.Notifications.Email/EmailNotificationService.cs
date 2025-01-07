@@ -90,7 +90,7 @@ namespace RetailRadar.Notifications.Email
                     <div class='container'>
                         <div class='header'>¡El precio ha bajado!</div>
                         <div class='content'>
-                            <p>El nuevo precio para <strong>{productInfo.Name}</strong> es de <strong>{productInfo.Price.Amount}€</strong>.</p>
+                            <p>El nuevo precio para <strong>{productInfo.Name}</strong> es de <strong>{productInfo.Price.ToString()}€</strong>.</p>
                             <p>Visita la página para comprarlas:</p>
                             <p><a href='{productInfo.Url}' class='button'>Comprar ahora</a></p>
                         </div>
