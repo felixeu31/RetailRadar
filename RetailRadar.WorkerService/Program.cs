@@ -1,3 +1,4 @@
+using RetailRadar.App.PageScrappers.Deporvillage;
 using RetailRadar.App.Services;
 
 using Serilog;
@@ -26,6 +27,7 @@ namespace RetailRadar.WorkerService
                     {
                         services.AddHostedService<PriceDropAlertScheduler>();
                         services.AddSingleton<IPriceCheckerService, PriceCheckerService>();
+                        services.AddSingleton<IDeporvillageProductPage, DeporvillageProductPage>();
                     });
 
                 var host = builder.Build();

@@ -57,7 +57,7 @@ namespace RetailRadar.WorkerService
 
             var result = await _retailRadarService.ExcutePriceDropAlertProcess("https://www.deporvillage.com/zapatillas-vivobarefoot-primus-lite-knit-azul-marino");
 
-            _logger.LogInformation("Worker '{0}' finished", nameof(PriceDropAlertScheduler));
+            _logger.LogInformation("Worker '{0}' finished {1}", nameof(PriceDropAlertScheduler), result.IsSuccess ? "succesfully" : "with errors");
         }
 
         public override void Dispose()

@@ -2,4 +2,4 @@
 
 namespace RetailRadar.App.Models;
 
-public record ProductDto(string Name, Price Price);
+public record ProductInfoDto(string Name, Price Price);

@@ -2,62 +2,41 @@
 using Microsoft.Playwright;
 
 using RetailRadar.App.Common;
+using RetailRadar.App.PageScrappers.Deporvillage;
 
 namespace RetailRadar.App.Services
 {
     public class PriceCheckerService : IPriceCheckerService
     {
         private readonly ILogger<PriceCheckerService> _logger;
+        private readonly IDeporvillageProductPage _deporvillageProductPage;
 
-        public PriceCheckerService(ILogger<PriceCheckerService> logger)
+        public PriceCheckerService(ILogger<PriceCheckerService> logger, IDeporvillageProductPage deporvillageProductPage)
         {
             _logger = logger;
+            _deporvillageProductPage = deporvillageProductPage;
         }
-        public async Task<Result<Price?>> ExcutePriceDropAlertProcess(string productUrl)
+
+        public async Task<Result> ExcutePriceDropAlertProcess(string productUrl)
         {
             try
             {
-                // Instalar Playwright browsers si es necesario
-                var exitCode = Program.Main(new[] { "install", "chromium" });
-                if (exitCode != 0)
+                var productInfoResult = await _deporvillageProductPage.GetProductInfo(productUrl);
+
+                if (productInfoResult == null || !productInfoResult.IsSuccess)
                 {
-                    throw new Exception("Error instalando navegadores de Playwright");
+                    return Result.Failure(productInfoResult!.ErrorMessage);
                 }
 
-                using var playwright = await Playwright.CreateAsync();
-                await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = false });
-                var page = await browser.NewPageAsync();
+                var productInfo = productInfoResult.Value;
 
-                await page.GotoAsync(productUrl);
+                _logger.LogInformation("Product Info retrieved from web page: {@ProductInfo}", productInfo);
 
-                // Reject cookies
-                var rejectButton = await page.QuerySelectorAsync("#onetrust-reject-all-handler");
-                if (rejectButton != null)
-                {
-                    await rejectButton.ClickAsync();
-                }
-
-                // Extract price
-                var priceElement = await page.QuerySelectorAsync("div[data-testid='price-indication-price']");
-                if (priceElement == null)
-                {
-                    var screenshotPath = Path.Combine(Directory.GetCurrentDirectory(), $"screenshot{DateTime.Now.Ticks}.png");
-                    await page.ScreenshotAsync(new PageScreenshotOptions { Path = screenshotPath });
-                    return Result<Price?>.Failure("Price not found");
-                }
-
-                var priceText = (await priceElement.InnerTextAsync()).Trim().Replace("€", "");
-                if (decimal.TryParse(priceText, out var priceAmount))
-                {
-                    var price = new Price { Amount = priceAmount };
-                    return Result<Price?>.Success(price);
-                }
-
-                return Result<Price?>.Failure("Invalid price format");
+                return Result.Success();
             }
             catch (Exception ex)
             {
-                return Result<Price?>.Failure(ex.Message);
+                return Result.Failure(ex.Message);
             }
         }
     }
