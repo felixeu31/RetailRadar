@@ -57,7 +57,7 @@ public class DeporvillageProductPage : IDeporvillageProductPage
 
             var title = (await titleElement.InnerTextAsync()).Trim();
 
-            var productInfo = new ProductInfoDto(title, price);
+            var productInfo = new ProductInfoDto(title, price, productUrl);
 
             return Result<ProductInfoDto?>.Success(productInfo);
         }

@@ -17,5 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RetailRadar.App\RetailRadar.App.csproj" />
+    <ProjectReference Include="..\RetailRadar.Notifications.Email\RetailRadar.Notifications.Email.csproj" />
   </ItemGroup>
 </Project>

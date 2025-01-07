@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7F27FDE8-033F-4A8F-B07C-5B29016D382F}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetailRadar.App", "RetailRadar.App\RetailRadar.App.csproj", "{23050F36-26F6-48C5-B129-D712DDFA0A89}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetailRadar.Tests", "RetailRadar.Tests\RetailRadar.Tests.csproj", "{11206EBF-062C-4DD6-8FCE-47DE919917B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetailRadar.Notifications.Email", "RetailRadar.Notifications.Email\RetailRadar.Notifications.Email.csproj", "{53772877-D3A4-489B-865A-967603E680D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{11206EBF-062C-4DD6-8FCE-47DE919917B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11206EBF-062C-4DD6-8FCE-47DE919917B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11206EBF-062C-4DD6-8FCE-47DE919917B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53772877-D3A4-489B-865A-967603E680D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53772877-D3A4-489B-865A-967603E680D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53772877-D3A4-489B-865A-967603E680D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53772877-D3A4-489B-865A-967603E680D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,5 +47,6 @@ Global
 		{4A264416-BF5A-481E-9DB6-8C9000CB176B} = {7F27FDE8-033F-4A8F-B07C-5B29016D382F}
 		{23050F36-26F6-48C5-B129-D712DDFA0A89} = {7F27FDE8-033F-4A8F-B07C-5B29016D382F}
 		{11206EBF-062C-4DD6-8FCE-47DE919917B7} = {51A51372-BF30-4031-A1BF-7F888AA827CB}
+		{53772877-D3A4-489B-865A-967603E680D9} = {7F27FDE8-033F-4A8F-B07C-5B29016D382F}
 	EndGlobalSection
 EndGlobal
