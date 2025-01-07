@@ -24,7 +24,7 @@ namespace RetailRadar.Tests
             var expectedPrice = new Price { Amount = 130.00m };
 
             // Act
-            var result = await _priceCheckerService.ReadPrice(productUrl);
+            var result = await _priceCheckerService.ExcutePriceDropAlertProcess(productUrl);
 
             // Assert
             Assert.True(result.IsSuccess);

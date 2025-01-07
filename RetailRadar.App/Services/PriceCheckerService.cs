@@ -2,7 +2,6 @@
 using Microsoft.Playwright;
 
 using RetailRadar.App.Common;
-using RetailRadar.App.Models;
 
 namespace RetailRadar.App.Services
 {
@@ -14,14 +13,10 @@ namespace RetailRadar.App.Services
         {
             _logger = logger;
         }
-        public async Task<Result<Price?>> ReadPrice(string productUrl)
+        public async Task<Result<Price?>> ExcutePriceDropAlertProcess(string productUrl)
         {
             try
             {
-                // Verificar que Xvfb está funcionando comprobando la variable DISPLAY
-                var display = Environment.GetEnvironmentVariable("DISPLAY");
-                _logger.LogInformation("Display configurado en: {Display}", display);
-
                 // Instalar Playwright browsers si es necesario
                 var exitCode = Program.Main(new[] { "install", "chromium" });
                 if (exitCode != 0)

@@ -1,4 +1,4 @@
-﻿namespace RetailRadar.App.Models
+﻿namespace RetailRadar.App.Common
 {
     public class Price
     {

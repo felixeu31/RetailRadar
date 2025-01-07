@@ -24,7 +24,7 @@ namespace RetailRadar.WorkerService
                     .UseSerilog() // Add Serilog to the logging system
                     .ConfigureServices((hostContext, services) =>
                     {
-                        services.AddHostedService<Worker>();
+                        services.AddHostedService<PriceDropAlertScheduler>();
                         services.AddSingleton<IPriceCheckerService, PriceCheckerService>();
                     });
 
