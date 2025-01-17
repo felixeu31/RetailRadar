@@ -2,22 +2,16 @@
 
 using RetailRadar.App.Common;
 using RetailRadar.App.Models;
+using RetailRadar.App.PageScrappers;
 
-namespace RetailRadar.App.PageScrappers.Deporvillage;
+namespace RetailRadar.App.PageScrappers;
 
-public class DeporvillageProductPage : IDeporvillageProductPage
+public class PcComponentesWebScrapper : IRetailWebScrapper
 {
     public async Task<Result<ProductInfoDto?>> GetProductInfo(string productUrl)
     {
         try
         {
-            // Instalar Playwright browsers si es necesario
-            var exitCode = Program.Main(new[] { "install", "chromium" });
-            if (exitCode != 0)
-            {
-                return Result<ProductInfoDto?>.Failure("Error instalando navegadores de Playwright");
-            }
-
             using var playwright = await Playwright.CreateAsync();
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = false });
             var page = await browser.NewPageAsync();
@@ -25,14 +19,14 @@ public class DeporvillageProductPage : IDeporvillageProductPage
             await page.GotoAsync(productUrl);
 
             // Reject cookies
-            var rejectButton = await page.QuerySelectorAsync("#onetrust-reject-all-handler");
+            var rejectButton = await page.QuerySelectorAsync("#cookiesrejectAll");
             if (rejectButton != null)
             {
                 await rejectButton.ClickAsync();
             }
 
             // Extract price
-            var priceElement = await page.QuerySelectorAsync("div[data-testid='price-indication-price']");
+            var priceElement = await page.QuerySelectorAsync("#pdp-price-current-integer");
             if (priceElement == null)
             {
                 var screenshotPath = Path.Combine(Directory.GetCurrentDirectory(), $"screenshot{DateTime.Now.Ticks}.png");
@@ -50,7 +44,7 @@ public class DeporvillageProductPage : IDeporvillageProductPage
             var price = priceResult.Value;
 
             // Extract title
-            var titleElement = await page.QuerySelectorAsync("h1[class^='Product_product-title']");
+            var titleElement = await page.QuerySelectorAsync("#pdp-title");
             if (titleElement == null)
             {
                 return Result<ProductInfoDto?>.Failure("Title not found");

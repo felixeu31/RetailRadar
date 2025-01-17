@@ -21,8 +21,8 @@ namespace RetailRadar.WorkerService
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            //ScheduleDailyTask(stoppingToken);
-            ScheduleMinutlyTask(stoppingToken);
+            ScheduleDailyTask(stoppingToken);
+            //ScheduleMinutlyTask(stoppingToken);
             return Task.CompletedTask;
         }
 

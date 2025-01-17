@@ -1,18 +1,19 @@
 ﻿using Microsoft.Extensions.Logging;
+
 using RetailRadar.App.Common;
 using RetailRadar.App.Interfaces.Notifications;
 using RetailRadar.App.Models;
-using RetailRadar.App.PageScrappers.Deporvillage;
+using RetailRadar.App.PageScrappers;
 
 namespace RetailRadar.App.Services
 {
     public class PriceCheckerService : IPriceCheckerService
     {
         private readonly ILogger<PriceCheckerService> _logger;
-        private readonly IDeporvillageProductPage _deporvillageProductPage;
+        private readonly IRetailWebScrapper _deporvillageProductPage;
         private readonly INotificationService _notificationService;
 
-        public PriceCheckerService(ILogger<PriceCheckerService> logger, IDeporvillageProductPage deporvillageProductPage, INotificationService notificationService)
+        public PriceCheckerService(ILogger<PriceCheckerService> logger, IRetailWebScrapper deporvillageProductPage, INotificationService notificationService)
         {
             _logger = logger;
             _deporvillageProductPage = deporvillageProductPage;

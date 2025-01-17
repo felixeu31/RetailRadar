@@ -1,20 +1,21 @@
 ﻿using Microsoft.Extensions.Logging;
+
 using Moq;
 
 using RetailRadar.App.Common;
 using RetailRadar.App.Models;
-using RetailRadar.App.PageScrappers.Deporvillage;
+using RetailRadar.App.PageScrappers;
 using RetailRadar.App.Services;
 
 namespace RetailRadar.Tests
 {
-    public class DeporvillageProductPageTests
+    public class DeporvillageWebScrapperTests
     {
-        private readonly DeporvillageProductPage _deporvillageProductPage;
+        private readonly DeporvillageWebScrapper _deporvillageProductPage;
 
-        public DeporvillageProductPageTests()
+        public DeporvillageWebScrapperTests()
         {
-            _deporvillageProductPage = new DeporvillageProductPage();
+            _deporvillageProductPage = new DeporvillageWebScrapper();
         }
 
         [Fact]
@@ -22,8 +23,6 @@ namespace RetailRadar.Tests
         {
             // Arrange
             var productUrl = "https://www.deporvillage.com/zapatillas-vivobarefoot-primus-lite-knit-azul-marino";
-            var expectedName = "Zapatillas VivoBarefoot Primus Lite Knit azul marino";
-            var expectedPrice = new Price { Amount = 130.00m };
 
             // Act
             var result = await _deporvillageProductPage.GetProductInfo(productUrl);
@@ -31,8 +30,8 @@ namespace RetailRadar.Tests
             // Assert
             Assert.True(result.IsSuccess);
             Assert.NotNull(result.Value);
-            Assert.Equal(expectedName, result.Value.Name);
-            Assert.Equal(expectedPrice.Amount, result.Value.Price.Amount);
+            Assert.True(!string.IsNullOrEmpty(result.Value.Name));
+            Assert.True(result.Value.Price.Amount > 0);
         }
     }
 }

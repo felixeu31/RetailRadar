@@ -1,5 +1,5 @@
 using RetailRadar.App.Interfaces.Notifications;
-using RetailRadar.App.PageScrappers.Deporvillage;
+using RetailRadar.App.PageScrappers;
 using RetailRadar.App.Services;
 using RetailRadar.Notifications.Email;
 
@@ -29,7 +29,7 @@ namespace RetailRadar.WorkerService
                     {
                         services.AddHostedService<PriceDropAlertScheduler>();
                         services.AddSingleton<IPriceCheckerService, PriceCheckerService>();
-                        services.AddSingleton<IDeporvillageProductPage, DeporvillageProductPage>();
+                        services.AddSingleton<IRetailWebScrapper, DeporvillageWebScrapper>();
                         services.AddSingleton<INotificationService, EmailNotificationService>();
                     });
 
