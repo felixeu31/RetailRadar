@@ -10,21 +10,22 @@ namespace RetailRadar.App.Services
     public class PriceCheckerService : IPriceCheckerService
     {
         private readonly ILogger<PriceCheckerService> _logger;
-        private readonly IRetailWebScrapper _deporvillageProductPage;
         private readonly INotificationService _notificationService;
+        private readonly IWebScrapperFactory _webScraperFactory;
 
-        public PriceCheckerService(ILogger<PriceCheckerService> logger, IRetailWebScrapper deporvillageProductPage, INotificationService notificationService)
+        public PriceCheckerService(ILogger<PriceCheckerService> logger, INotificationService notificationService, IWebScrapperFactory webScrapperFactory)
         {
             _logger = logger;
-            _deporvillageProductPage = deporvillageProductPage;
             this._notificationService = notificationService;
+            this._webScraperFactory = webScrapperFactory;
         }
 
         public async Task<Result> ExcutePriceDropAlertProcess(PriceDropAlertProcessRequest request)
         {
             try
             {
-                var productInfoResult = await _deporvillageProductPage.GetProductInfo(request.ProductUrl);
+                var webScrapper = _webScraperFactory.Create(request.WebScrapperType);
+                var productInfoResult = await webScrapper.GetProductInfo(request.ProductUrl);
 
                 if (productInfoResult == null || !productInfoResult.IsSuccess)
                 {
@@ -61,5 +62,5 @@ namespace RetailRadar.App.Services
         }
     }
 
-    public record PriceDropAlertProcessRequest(string ProductUrl, decimal PriceThreshold);
+    public record PriceDropAlertProcessRequest(string ProductUrl, decimal PriceThreshold, string WebScrapperType);
 }

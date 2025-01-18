@@ -21,8 +21,8 @@ namespace RetailRadar.WorkerService
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            ScheduleDailyTask(stoppingToken);
-            //ScheduleMinutlyTask(stoppingToken);
+            //ScheduleDailyTask(stoppingToken);
+            ScheduleMinutlyTask(stoppingToken);
             return Task.CompletedTask;
         }
 
@@ -56,7 +56,7 @@ namespace RetailRadar.WorkerService
             }
 
             _logger.LogInformation("Doing work at: {0}", DateTimeOffset.Now);
-            var result = await _retailRadarService.ExcutePriceDropAlertProcess(new PriceDropAlertProcessRequest("https://www.deporvillage.com/zapatillas-vivobarefoot-primus-lite-knit-azul-marino", 200M));
+            var result = await _retailRadarService.ExcutePriceDropAlertProcess(new PriceDropAlertProcessRequest("https://www.deporvillage.com/zapatillas-vivobarefoot-primus-lite-knit-azul-marino", 200M, "Deporvillage"));
 
             _logger.LogInformation("Work done {0}", result.IsSuccess ? "succesfully" : "with errors");
         }

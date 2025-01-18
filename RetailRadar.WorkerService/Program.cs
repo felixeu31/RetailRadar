@@ -28,8 +28,8 @@ namespace RetailRadar.WorkerService
                     .ConfigureServices((hostContext, services) =>
                     {
                         services.AddHostedService<PriceDropAlertScheduler>();
+                        services.AddSingleton<IWebScrapperFactory, WebScrapperFactory>();
                         services.AddSingleton<IPriceCheckerService, PriceCheckerService>();
-                        services.AddSingleton<IRetailWebScrapper, DeporvillageWebScrapper>();
                         services.AddSingleton<INotificationService, EmailNotificationService>();
                     });
 
