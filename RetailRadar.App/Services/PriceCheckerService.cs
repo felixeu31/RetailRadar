@@ -38,15 +38,14 @@ namespace RetailRadar.App.Services
 
                 if (productInfo!.Price.Amount < request.PriceThreshold)
                 {
-                    var notifyTo = new PersonDto("Félix Díez", "felixeu31@gmail.com");
-                    var notificationResult = await _notificationService.NotifyProductPriceDrop(productInfo, notifyTo);
+                    var notificationResult = await _notificationService.NotifyProductPriceDrop(productInfo, request.Recipient);
 
                     if (notificationResult == null || !notificationResult.IsSuccess)
                     {
                         return Result.Failure(notificationResult!.ErrorMessage);
                     }
 
-                    _logger.LogInformation("Price drop notified to: {@Person}", notifyTo); 
+                    _logger.LogInformation("Price drop notified to: {@Person}", request.Recipient); 
                 }
                 else
                 {
@@ -62,5 +61,5 @@ namespace RetailRadar.App.Services
         }
     }
 
-    public record PriceDropAlertProcessRequest(string ProductUrl, decimal PriceThreshold, string WebScrapperType);
+    public record PriceDropAlertProcessRequest(string ProductUrl, decimal PriceThreshold, string WebScrapperType, PersonDto Recipient);
 }

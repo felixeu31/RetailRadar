@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-RetailRadar.QuartzScheduler-e5dbe867-9fed-4246-89a9-b6ab372fa3bd</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
+    <PackageReference Include="Quartz.AspNetCore" Version="3.13.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RetailRadar.App\RetailRadar.App.csproj" />
+    <ProjectReference Include="..\RetailRadar.Notifications.Email\RetailRadar.Notifications.Email.csproj" />
+  </ItemGroup>
+</Project>

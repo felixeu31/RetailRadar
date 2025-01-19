@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using RetailRadar.App.Models;
 
 namespace RetailRadar.WorkerService
 {
@@ -56,7 +57,7 @@ namespace RetailRadar.WorkerService
             }
 
             _logger.LogInformation("Doing work at: {0}", DateTimeOffset.Now);
-            var result = await _retailRadarService.ExcutePriceDropAlertProcess(new PriceDropAlertProcessRequest("https://www.deporvillage.com/zapatillas-vivobarefoot-primus-lite-knit-azul-marino", 200M, "Deporvillage"));
+            var result = await _retailRadarService.ExcutePriceDropAlertProcess(new PriceDropAlertProcessRequest("https://www.deporvillage.com/zapatillas-vivobarefoot-primus-lite-knit-azul-marino", 200M, "Deporvillage", new PersonDto("Félix Díez", "felixeu31@gmail.com")));
 
             _logger.LogInformation("Work done {0}", result.IsSuccess ? "succesfully" : "with errors");
         }
